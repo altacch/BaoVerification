@@ -1,0 +1,7 @@
+{ "expected-missing-functions":
+  [
+
+  ],
+  "proof-name": "memcpy",
+  "proof-root": "cbmc/proofs"
+}
