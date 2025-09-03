@@ -1,0 +1,7 @@
+{ "expected-missing-functions":
+  [
+
+  ],
+  "proof-name": "bitmap_find_consec",
+  "proof-root": "cbmc/proofs"
+}

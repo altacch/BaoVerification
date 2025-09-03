@@ -1,0 +1,7 @@
+{ "expected-missing-functions":
+  [
+
+  ],
+  "proof-name": "bitmap_count_consecutive",
+  "proof-root": "cbmc/proofs"
+}
