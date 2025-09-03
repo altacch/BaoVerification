@@ -1,0 +1,7 @@
+{ "expected-missing-functions":
+  [
+
+  ],
+  "proof-name": "list_peek",
+  "proof-root": "cbmc/proofs"
+}

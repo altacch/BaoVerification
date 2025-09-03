@@ -1,0 +1,7 @@
+{ "expected-missing-functions":
+  [
+
+  ],
+  "proof-name": "list_pop",
+  "proof-root": "cbmc/proofs"
+}
