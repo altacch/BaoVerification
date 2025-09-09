@@ -1,0 +1,2 @@
+#define PLAT_CPU_NUM (4)
+#define PLAT_BASE_ADDR (0x40000000)
