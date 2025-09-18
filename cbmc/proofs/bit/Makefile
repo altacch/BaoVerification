@@ -9,7 +9,7 @@ DEFINES +=
 INCLUDES += -I $(SRCDIR)/bao-hypervisor/src/lib/inc -I $(SRCDIR)/bao-hypervisor/src/core/inc/ -I $(SRCDIR)/bao-hypervisor/src/arch/riscv/inc/
 
 REMOVE_FUNCTION_BODY +=
-UNWINDSET +=
+UNWINDSET +=  bit32_ffs.0:33 bit32_count.0:33 bit64_ffs.0:65 bit64_count.0:65 my_popcnt.0:65
 
 PROOF_SOURCES += $(PROOFDIR)/$(HARNESS_FILE).c
 PROJECT_SOURCES += $(PROOFDIR)/$(HARNESS_FILE).c
