@@ -21,14 +21,13 @@ void harness(void)
 {
     bitmap_t map[MAP_LEN];
     size_t size;
+    __CPROVER_assume(size < BITMAP_GRANULE_LEN * MAP_LEN);
     size_t nth;
+    __CPROVER_assume(nth < BITMAP_GRANULE_LEN * MAP_LEN);
     size_t start;
+    __CPROVER_assume(start < BITMAP_GRANULE_LEN * MAP_LEN);
     bool set;
     ssize_t res;
-
-    __CPROVER_assume(size < BITMAP_GRANULE_LEN * MAP_LEN);
-    __CPROVER_assume(nth < BITMAP_GRANULE_LEN * MAP_LEN);
-    __CPROVER_assume(start < BITMAP_GRANULE_LEN * MAP_LEN);
 
     res = bitmap_find_nth(map, size, nth, start, set);
 

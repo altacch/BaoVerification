@@ -21,15 +21,15 @@ void harness(void)
 {
     bitmap_t map[MAP_LEN];
     size_t size;
-    size_t start;
-    size_t n;
-    size_t res;
-
     __CPROVER_assume(size < BITMAP_GRANULE_LEN * MAP_LEN);
+    size_t start;
     __CPROVER_assume(start < BITMAP_GRANULE_LEN * MAP_LEN);
+    size_t n;
     __CPROVER_assume(n < BITMAP_GRANULE_LEN * MAP_LEN);
+    size_t res;
 
     res = bitmap_count_consecutive(map, size, start, n);
 
-    assert(res < BITMAP_GRANULE_LEN * MAP_LEN);
+    /* Note: result is a count, not an index, so equality is also good here */
+    assert(res <= BITMAP_GRANULE_LEN * MAP_LEN);
 }
