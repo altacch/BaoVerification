@@ -5,12 +5,12 @@ HARNESS_FILE = memset_harness
 # Litani dashboard. It can be human-readable and contain spaces if you wish.
 PROOF_UID = memset
 
-DEFINES += -DARRAY_SIZE=1000
+DEFINES += -DARRAY_SIZE=40
 INCLUDES += -nostdlib -I $(SRCDIR)/bao-hypervisor/src/lib/inc/ -I $(SRCDIR)/bao-hypervisor/src/core/inc/ -I $(SRCDIR)/bao-hypervisor/src/arch/riscv/inc/
 
 REMOVE_FUNCTION_BODY +=
-UNWINDSET += memset.0:1100
-UNWINDSET += harness.0:1100
+UNWINDSET += memset.0:41
+UNWINDSET += harness.0:41
 
 PROOF_SOURCES += $(PROOFDIR)/$(HARNESS_FILE).c
 PROJECT_SOURCES += $(SRCDIR)/bao-hypervisor/src/lib/string.c

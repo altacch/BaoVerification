@@ -21,11 +21,10 @@
  */
 void harness(void)
 {
-    static const size_t size;
-    __CPROVER_assume(size < ARRAY_SIZE);
-
     uint8_t *a;     /* source array */
     uint8_t *b;     /* destination array */
+    size_t size;
+    __CPROVER_assume(size < ARRAY_SIZE);
     uint8_t *res;
 
     a = malloc(size);
@@ -37,7 +36,7 @@ void harness(void)
 
     /**
        Correctness specification for memcpy:
-       forall size . forall 0 <= i < size . b[i] = a[i]
+       forall size . forall 0 <= i < size . b[i] == a[i]
     */
     for (size_t i = 0; i < size; i++) {
         assert(a[i] == b[i]);
