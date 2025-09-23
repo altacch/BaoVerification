@@ -1,0 +1,7 @@
+{ "expected-missing-functions":
+  [
+
+  ],
+  "proof-name": "mem_alloc_ppages",
+  "proof-root": "cbmc/proofs"
+}

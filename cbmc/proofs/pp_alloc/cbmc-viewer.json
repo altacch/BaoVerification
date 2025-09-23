@@ -1,0 +1,7 @@
+{ "expected-missing-functions":
+  [
+
+  ],
+  "proof-name": "pp_alloc",
+  "proof-root": "cbmc/proofs"
+}
