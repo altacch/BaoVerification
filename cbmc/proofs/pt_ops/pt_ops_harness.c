@@ -26,7 +26,7 @@ void harness(void)
     assert(proof_pt_is_valid(pt));
 
     size_t lvl;
-    __CPROVER_assume(lvl < 3);   // 3 levels for RISC-V
+    __CPROVER_assume(lvl < 3);
     size_t res;
 
     /* Verification of pt_nentries */

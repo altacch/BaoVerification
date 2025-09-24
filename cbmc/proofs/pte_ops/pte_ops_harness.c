@@ -35,7 +35,7 @@ void harness(void)
         pte_t current_pte = pt->root[i];
         paddr_t addr;
         pte_type_t type;
-        pte_flags_t flags;     // need assumptions on these?
+        pte_flags_t flags;
 
         pte_set(&current_pte, addr, type, flags);
 
@@ -53,7 +53,7 @@ void harness(void)
     /* Verification of pte_set_rsw, pte_check_rsw */
     {
         pte_t current_pte = pt->root[i];
-        pte_flags_t flags;     // need assumptions on these?
+        pte_flags_t flags;
 
         pte_set_rsw(&current_pte, flags);
         assert(pte_check_rsw(&current_pte, flags));
@@ -63,6 +63,7 @@ void harness(void)
     {
         pte_t current_pte = pt->root[i];
         size_t lvl;
+        __CPROVER_assume(lvl < 3);
         bool result = pte_table(pt, &current_pte, lvl);
         bool expected = pte_valid(&current_pte) && ((current_pte & PTE_RWX) == 0);
         assert(result == expected);

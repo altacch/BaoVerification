@@ -25,12 +25,15 @@ void harness(void)
     proof_pt_init(pt);
     assert(proof_pt_is_valid(pt));
 
+    size_t i;
+    __CPROVER_assume(i < ROOT_SIZE);
+    pte_t pte = pt->root[i];
     size_t lvl;
-    pte_t pte;
+    __CPROVER_assume(lvl < 3);
     bool res;
 
-    __CPROVER_assume(lvl < 3);   // 3 levels for RISC-V
-
     res = pte_page(pt, &pte, lvl);
-    // assert();
+    /* A PTE for a subtable must be valid */
+    assert(!res || pte_valid(&pte));
+    assert(!res || ((pte & PTE_RWX) != 0));
 }
