@@ -1,0 +1,7 @@
+{ "expected-missing-functions":
+  [
+
+  ],
+  "proof-name": "pte_allocable",
+  "proof-root": "cbmc/proofs"
+}
