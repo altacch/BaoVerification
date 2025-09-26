@@ -38,7 +38,10 @@ bool proof_ppl_is_valid(struct page_pool *pp)
     if (!proof_paddr_is_valid(pp->base)) return false;
     if (pp->num_pages * PAGE_SIZE > PROOF_PADDR_SIZE) return false;
     if (pp->free > pp->num_pages) return false;
-    if (pp->last > pp->num_pages) return false;
+    /* Note: pp->last is actually allowed to go out of bounds; functions
+       in the bitmap library must check whether this is the case and return
+       an error */
+    /* if (pp->last > pp->num_pages) return false; */
     if (root_pool.bitmap == NULL) return false;
 
     return true;

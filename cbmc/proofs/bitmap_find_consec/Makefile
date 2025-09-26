@@ -9,7 +9,7 @@ DEFINES += -DMAP_LEN=4
 INCLUDES += -I $(SRCDIR)/bao-hypervisor/src/lib/inc -I $(SRCDIR)/bao-hypervisor/src/core/inc/ -I $(SRCDIR)/bao-hypervisor/src/arch/riscv/inc/
 
 REMOVE_FUNCTION_BODY +=
-UNWINDSET += bitmap_find_consec.0:130
+UNWINDSET += bitmap_find_consec.0:150
 
 PROOF_SOURCES += $(PROOFDIR)/$(HARNESS_FILE).c
 PROJECT_SOURCES += $(SRCDIR)/bao-hypervisor/src/lib/bitmap.c

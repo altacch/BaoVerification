@@ -25,11 +25,13 @@ void harness(void)
     size_t nth;
     __CPROVER_assume(nth < BITMAP_GRANULE_LEN * MAP_LEN);
     size_t start;
-    __CPROVER_assume(start < BITMAP_GRANULE_LEN * MAP_LEN);
+    /* __CPROVER_assume(start < BITMAP_GRANULE_LEN * MAP_LEN); */
     bool set;
     ssize_t res;
 
     res = bitmap_find_nth(map, size, nth, start, set);
-
+    /* if start is out of bounds, return -1 */
+    assert((start < BITMAP_GRANULE_LEN * MAP_LEN) || (res == -1));
+    /* in any case, return either -1 or a valid result */
     assert((res == -1) || ((res >= 0) && (res < BITMAP_GRANULE_LEN * MAP_LEN)));
 }
