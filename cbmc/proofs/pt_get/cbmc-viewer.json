@@ -1,0 +1,7 @@
+{ "expected-missing-functions":
+  [
+
+  ],
+  "proof-name": "pt_get",
+  "proof-root": "cbmc/proofs"
+}
