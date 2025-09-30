@@ -1,0 +1,7 @@
+{ "expected-missing-functions":
+  [
+
+  ],
+  "proof-name": "mem_find_sec",
+  "proof-root": "cbmc/proofs"
+}

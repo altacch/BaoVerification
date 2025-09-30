@@ -1,0 +1,7 @@
+{ "expected-missing-functions":
+  [
+
+  ],
+  "proof-name": "mem_inflate_pt",
+  "proof-root": "cbmc/proofs"
+}

@@ -1,0 +1,7 @@
+{ "expected-missing-functions":
+  [
+
+  ],
+  "proof-name": "mem_expand_pte",
+  "proof-root": "cbmc/proofs"
+}
