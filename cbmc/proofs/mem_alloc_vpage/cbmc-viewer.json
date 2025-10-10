@@ -1,0 +1,7 @@
+{ "expected-missing-functions":
+  [
+
+  ],
+  "proof-name": "mem_alloc_vpage",
+  "proof-root": "cbmc/proofs"
+}
