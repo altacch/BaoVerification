@@ -119,6 +119,11 @@ static inline bool pte_table(struct page_table* pt, pte_t* pte, size_t lvl)
     return (*pte & 0xf) == PTE_VALID;
 }
 
+static inline void pte_set_default(pte_t *pte, pte_t *parent)
+{
+    *pte = NULL;
+}
+
 #endif /* |__ASSEMBLER__ */
 
 #endif /* __ARCH_PAGE_TABLE_H__ */

@@ -44,18 +44,18 @@ static inline size_t pt_size(struct page_table* pt, size_t lvl)
 
 static inline size_t pt_getpteindex(struct page_table* pt, pte_t* pte, size_t lvl)
 {
-    // stubbed
-    size_t res;
+    return (size_t)(((size_t)pte) & (pt_size(pt, lvl) - 1)) / sizeof(pte_t);
+    /* size_t res;
     __CPROVER_assume(res < ROOT_SIZE);
-    return res;
+    return res; */
 }
 
 static inline size_t pt_getpteindex_by_va(struct page_table* pt, vaddr_t va, size_t lvl)
 {
-    // stubbed
-    size_t res;
+    return (va >> pt->dscr->lvl_off[lvl]) & (pt_nentries(pt, lvl) - 1);
+    /* size_t res;
     __CPROVER_assume(res < ROOT_SIZE);
-    return res;
+    return res; */
 }
 
 static inline bool pt_lvl_terminal(struct page_table* pt, size_t lvl)

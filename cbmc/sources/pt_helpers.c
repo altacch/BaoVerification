@@ -5,9 +5,8 @@
 
 struct page_table * proof_pt_allocate(void)
 {
-    struct page_table *pt;
-
     /* Allocation of struct page_table */
+    struct page_table *pt;
     pt = malloc(sizeof(struct page_table));
     __CPROVER_assume(pt != NULL);
     return pt;
@@ -27,15 +26,25 @@ void proof_pt_init(struct page_table *pt)
     pt->root = proof_pt_root_allocate();
     pt->dscr = hyp_pt_dscr;   // to add: vm_pt_dscr
     /* pt.arch unconstrained */
+
+    /* Initialization of root array */
+    for (size_t i = 0; i < ROOT_SIZE; i++) {
+        pte_set_default(&pt->root[i], PTE_RSW_EMPT);
+    }
 }
 
 bool proof_pt_is_valid(struct page_table *pt)
 {
     if (pt == NULL) return false;
     if (pt->root == NULL) return false;
+    for (size_t i = 0; i < ROOT_SIZE; i++) {
+        if (pte_valid(&pt->root[i]) && pte_addr(&pt->root[i]) == NULL) return false;
+    }
     if (pt->dscr != hyp_pt_dscr) return false;
     return true;
 }
+
+// todo: proof_pt_half_fill, proof_pt_fill (cassare *hier*)
 
 /* Helpers for hierarchical page table */
 
@@ -54,12 +63,12 @@ void proof_hier_pt_init(struct page_table *pt)
     /* Build level 1 tables */
     for (size_t i = 0; i < ROOT_SIZE; i++) {
         pte_t *root_l1 = proof_pt_root_allocate();
-        pt->root[i] = root_l1;
+        pte_set(&pt->root[i], root_l1, PTE_TABLE, PTE_HYP_FLAGS);
 
         /* Build level 2 tables */
         for (size_t j = 0; j < ROOT_SIZE; j++) {
             pte_t *root_l2 = proof_pt_root_allocate();
-            root_l1[j] = root_l2;
+            pte_set(&root_l1[j], root_l2, PTE_TABLE, PTE_HYP_FLAGS);
         }
     }
 }
@@ -70,12 +79,36 @@ bool proof_hier_pt_is_valid(struct page_table *pt)
     if (pt->root == NULL) return false;
     if (pt->dscr != hyp_pt_dscr) return false;
     for (size_t i = 0; i < ROOT_SIZE; i++) {
-        pte_t *root_l1 = pt->root[i];
-        if (root_l1 == NULL) return false;        
+        pte_t *root_l1 = (pte_t *) pte_addr(&pt->root[i]);
+        if (root_l1 == NULL) return false;
         for (size_t j = 0; j < ROOT_SIZE; j++) {
-            pte_t *root_l2 = root_l1[j];
+            pte_t *root_l2 = (pte_t *) pte_addr(&root_l1[j]);
             if (root_l2 == NULL) return false;
         }
     }
     return true;
 }
+
+void proof_half_pt_init(struct page_table *pt)
+{
+    /* Build level 1 tables */
+    for (size_t i = 0; i < ROOT_SIZE; i++) {
+        if (i%2 == 0) {
+            pte_t *root_l1 = proof_pt_root_allocate();
+            pte_set(&pt->root[i], root_l1, PTE_TABLE, PTE_HYP_FLAGS);
+
+            /* Build level 2 tables */
+            for (size_t j = 0; j < ROOT_SIZE; j++) {
+                if (j%2 == 0) {
+                    pte_t *root_l2 = proof_pt_root_allocate();
+                    pte_set(&root_l1[j], root_l2, PTE_TABLE, PTE_HYP_FLAGS);
+                } else {
+                    pte_set(&root_l1[j], NULL, PTE_INVALID, 0);
+                }
+            }
+        } else {
+            pte_set(&pt->root[i], NULL, PTE_INVALID, 0);
+        }
+    }
+}
+
