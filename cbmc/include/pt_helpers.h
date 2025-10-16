@@ -3,7 +3,10 @@
 struct page_table * proof_pt_allocate(void);
 void proof_pt_init(struct page_table *pt);
 bool proof_pt_is_valid(struct page_table *pt);
+void proof_pt_fill(struct page_table *pt, size_t m);
 
+/*
 struct page_table * proof_hier_pt_allocate(void);
 void proof_hier_pt_init(struct page_table *pt);
 bool proof_hier_pt_is_valid(struct page_table *pt);
+*/
