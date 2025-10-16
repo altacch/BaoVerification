@@ -39,10 +39,12 @@ void harness(void)
     }
 
     {
-        /* Case 1: full page table, page walk always succeeds */
+        /* Case 2: full page table, page walk always succeeds */
         struct page_table *pt;
-        pt = proof_hier_pt_allocate();
-        assert(proof_hier_pt_is_valid(pt));
+        pt = proof_pt_allocate();
+        proof_pt_init(pt);
+        proof_pt_fill(pt, 1);
+        assert(proof_pt_is_valid(pt));
 
         size_t lvl;
         __CPROVER_assume(lvl < 3);
@@ -52,6 +54,6 @@ void harness(void)
 
         res = pt_get_pte(pt, lvl, vaddr);
         assert(res != NULL);
-        assert(proof_hier_pt_is_valid(pt));
+        assert(proof_pt_is_valid(pt));
     }
 }

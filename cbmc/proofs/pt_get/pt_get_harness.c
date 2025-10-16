@@ -21,9 +21,11 @@
 void harness(void)
 {
     struct page_table *pt;
-    pt = proof_hier_pt_allocate();  // need full hierarchical page table
-    assert(proof_hier_pt_is_valid(pt));
-    
+    pt = proof_pt_allocate();
+    proof_pt_init(pt);
+    proof_pt_fill(pt, 4);
+    assert(proof_pt_is_valid(pt));
+
     size_t lvl;
     __CPROVER_assume(lvl < 3);
     vaddr_t vaddr;
@@ -31,5 +33,8 @@ void harness(void)
     pte_t *res;
 
     res = pt_get(pt, lvl, vaddr);
-    assert(proof_hier_pt_is_valid(pt));
+    uintptr_t val1 = (uintptr_t) res;
+    uintptr_t val2 = pt_size(pt, lvl) - 1u;
+    assert(res == NULL || !(val1 & val2));
+    assert(proof_pt_is_valid(pt));
 }

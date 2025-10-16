@@ -5,12 +5,12 @@ HARNESS_FILE = pte_page_harness
 # Litani dashboard. It can be human-readable and contain spaces if you wish.
 PROOF_UID = pte_page
 
-DEFINES += -DROOT_SIZE=32 -DRV_XLEN=64
+DEFINES += -DROOT_SIZE=512 -DRV_XLEN=64
 INCLUDES += -I $(SRCDIR)/bao-hypervisor/src/lib/inc/ -I $(SRCDIR)/bao-hypervisor/src/core/inc/ -I $(SRCDIR)/bao-hypervisor/src/core/mmu/inc/ -I $(SRCDIR)/bao-hypervisor/src/arch/riscv/inc/
 INCLUDES += -I $(PROOF_INCLUDE)
 
 REMOVE_FUNCTION_BODY +=
-UNWINDSET += 
+UNWINDSET += proof_pt_init.0:513 proof_pt_is_valid.0:513
 
 PROOF_SOURCES += $(PROOFDIR)/$(HARNESS_FILE).c $(PROOF_SOURCE)/pt_helpers.c
 PROJECT_SOURCES += $(SRCDIR)/bao-hypervisor/src/arch/riscv/page_table.c

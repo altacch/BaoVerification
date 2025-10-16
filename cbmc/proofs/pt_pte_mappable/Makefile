@@ -5,12 +5,12 @@ HARNESS_FILE = pt_pte_mappable_harness
 # Litani dashboard. It can be human-readable and contain spaces if you wish.
 PROOF_UID = pt_pte_mappable
 
-DEFINES += -DIRQC=PLIC -DROOT_SIZE=512 -DRV_XLEN=64
+DEFINES += -DIRQC=PLIC -DROOT_SIZE=4 -DRV_XLEN=64
 INCLUDES += -I$(SRCDIR)/bao-hypervisor/src/lib/inc/ -I$(SRCDIR)/bao-hypervisor/src/core/inc/ -I$(SRCDIR)/bao-hypervisor/src/core/mmu/inc/ -I$(SRCDIR)/bao-hypervisor/src/arch/riscv/inc/ -I$(SRCDIR)/bao-hypervisor/src/platform/drivers/sbi_uart/inc -I$(SRCDIR)/bao-hypervisor/src/platform/qemu-riscv64-virt/inc/ -I$(SRCDIR)/bao-hypervisor/src/arch/riscv/irqc/plic/inc/
 INCLUDES += -I $(PROOF_INCLUDE)
 
 REMOVE_FUNCTION_BODY +=
-UNWINDSET +=
+UNWINDSET += proof_pt_init.0:5 proof_pt_is_valid.0:5
 
 PROOF_SOURCES += $(PROOFDIR)/$(HARNESS_FILE).c $(PROOF_SOURCE)/pt_helpers.c $(PROOF_SOURCE)/as_helpers.c
 PROJECT_SOURCES += $(SRCDIR)/bao-hypervisor/src/arch/riscv/page_table.c $(PROOF_SOURCE)/core_mmu_mem.c

@@ -5,13 +5,13 @@ HARNESS_FILE = pt_get_pte_harness
 # Litani dashboard. It can be human-readable and contain spaces if you wish.
 PROOF_UID = pt_get_pte
 
-DEFINES += -DROOT_SIZE=8 -DRV_XLEN=64
+DEFINES += -DROOT_SIZE=4 -DRV_XLEN=64
 INCLUDES += -I$(PROOF_STUB)/core/inc
 INCLUDES += -I $(SRCDIR)/bao-hypervisor/src/lib/inc/ -I $(SRCDIR)/bao-hypervisor/src/core/inc/ -I $(SRCDIR)/bao-hypervisor/src/core/mmu/inc/ -I $(SRCDIR)/bao-hypervisor/src/arch/riscv/inc/
 INCLUDES += -I $(PROOF_INCLUDE)
 
 REMOVE_FUNCTION_BODY +=
-UNWINDSET += proof_hier_pt_init.0:10 proof_hier_pt_init.1:10 proof_hier_pt_is_valid.0:10 proof_hier_pt_is_valid.1:10
+UNWINDSET += proof_pt_init.0:5 proof_pt_is_valid.0:5 proof_pt_fill.0:5 proof_pt_fill.1:5 proof_pt_fill.2:5
 UNWINDSET += pt_get_pte.0:5  # 3-level cache for RV64
 
 PROOF_SOURCES += $(PROOFDIR)/$(HARNESS_FILE).c $(PROOF_SOURCE)/pt_helpers.c

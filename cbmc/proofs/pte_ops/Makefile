@@ -10,7 +10,7 @@ INCLUDES += -I $(SRCDIR)/bao-hypervisor/src/lib/inc/ -I $(SRCDIR)/bao-hypervisor
 INCLUDES += -I $(PROOF_INCLUDE)
 
 REMOVE_FUNCTION_BODY +=
-UNWINDSET +=
+UNWINDSET += proof_pt_init.0:513 proof_pt_is_valid.0:513
 
 PROOF_SOURCES += $(PROOFDIR)/$(HARNESS_FILE).c $(PROOF_SOURCE)/pt_helpers.c
 PROJECT_SOURCES += $(SRCDIR)/bao-hypervisor/src/arch/riscv/page_table.c
