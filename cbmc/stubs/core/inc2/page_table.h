@@ -34,7 +34,8 @@ static inline size_t pt_nentries(struct page_table* pt, size_t lvl)
 
 static inline size_t pt_lvlsize(struct page_table* pt, size_t lvl)
 {
-    return (size_t)(1ULL << pt->dscr->lvl_off[lvl]);
+    //    return (size_t)(1ULL << pt->dscr->lvl_off[lvl]);
+    return PAGE_SIZE;  // stubbed
 }
 
 static inline size_t pt_size(struct page_table* pt, size_t lvl)

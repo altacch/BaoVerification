@@ -74,11 +74,15 @@
 #if (RV32)
 typedef uint32_t pte_t;
 #else
-typedef uint64_t pte_t;
+//typedef uint64_t pte_t;
+typedef struct {
+    void * addr;
+    uint64_t bits;
+} pte_t;
 #endif
 
-typedef pte_t pte_type_t;
-typedef pte_t pte_flags_t;
+typedef uint64_t pte_type_t;
+typedef uint64_t pte_flags_t;
 
 struct page_table;
 
@@ -88,35 +92,33 @@ struct page_table_arch {
 
 static inline void pte_set(pte_t* pte, paddr_t addr, pte_type_t type, pte_flags_t flags)
 {
-    *pte = addr;  // stubbed
+    pte->addr = addr;
+    pte->bits = ((type == PTE_TABLE) ? type : (type | flags)) & PTE_FLAGS_MSK;
 }
 
 static inline paddr_t pte_addr(pte_t* pte)
 {
-    return (*pte);  // stubbed
+    return pte->addr;
 }
 
 static inline bool pte_valid(pte_t* pte)
 {
-    return (*pte != NULL);  // stubbed
+    return (pte->bits & PTE_VALID);
 }
 
 static inline void pte_set_rsw(pte_t* pte, pte_flags_t flag)
 {
-    *pte = (*pte & ~PTE_RSW_MSK) | (flag & PTE_RSW_MSK);
+    pte->bits = (pte->bits & ~PTE_RSW_MSK) | (flag & PTE_RSW_MSK);
 }
 
 static inline bool pte_check_rsw(pte_t* pte, pte_flags_t flag)
 {
-    return (*pte & PTE_RSW_MSK) == (flag & PTE_RSW_MSK);
+    return (pte->bits & PTE_RSW_MSK) == (flag & PTE_RSW_MSK);
 }
 
 static inline bool pte_table(struct page_table* pt, pte_t* pte, size_t lvl)
 {
-    UNUSED_ARG(pt);
-    UNUSED_ARG(lvl);
-
-    return (*pte & 0xf) == PTE_VALID;
+    return (pte->bits & 0xF) == PTE_VALID;
 }
 
 #endif /* |__ASSEMBLER__ */
