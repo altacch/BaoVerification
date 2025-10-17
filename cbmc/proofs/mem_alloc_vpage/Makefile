@@ -5,19 +5,23 @@ HARNESS_FILE = mem_alloc_vpage_harness
 # Litani dashboard. It can be human-readable and contain spaces if you wish.
 PROOF_UID = mem_alloc_vpage
 
-DEFINES += -DIRQC=PLIC -DROOT_SIZE=4 -DMAX_N=4 -DRV_XLEN=64
-INCLUDES += -I$(PROOF_STUB)/core/inc
+DEFINES += -DIRQC=PLIC -DROOT_SIZE=4 -DMAX_N=2 -DRV_XLEN=64
+INCLUDES += -I$(PROOF_STUB)/core/inc2
 INCLUDES += -I$(SRCDIR)/bao-hypervisor/src/lib/inc/ -I$(SRCDIR)/bao-hypervisor/src/core/inc/ -I$(SRCDIR)/bao-hypervisor/src/core/mmu/inc/ -I$(SRCDIR)/bao-hypervisor/src/arch/riscv/inc/ -I$(SRCDIR)/bao-hypervisor/src/platform/drivers/sbi_uart/inc -I$(SRCDIR)/bao-hypervisor/src/platform/qemu-riscv64-virt/inc/ -I$(SRCDIR)/bao-hypervisor/src/arch/riscv/irqc/plic/inc/
 INCLUDES += -I $(PROOF_INCLUDE)
 
-REMOVE_FUNCTION_BODY += spin_lock spin_unlock pt_get mem_find_sec mem_alloc_pt
-UNWINDSET += proof_hier_pt_init.0:5 proof_hier_pt_init.1:5 proof_hier_pt_is_valid.0:5 proof_hier_pt_is_valid.1:5 pt_get_pte.0:3
-UNWINDSET += mem_alloc_vpage.1:2 # while ((entry < nentries) && (count < n) && !failed)
+REMOVE_FUNCTION_BODY += spin_lock spin_unlock mem_find_sec
+#REMOVE_FUNCTION_BODY += pt_get
+REMOVE_FUNCTION_BODY += mem_alloc_pt
+UNWINDSET += proof_pt_init.0:5 proof_pt_is_valid.0:5 #proof_pt_fill.0:5 proof_pt_fill.1:5 proof_pt_fill.2:5
+UNWINDSET += pt_get_pte.0:5
+UNWINDSET += mem_alloc_vpage.1:3 # while ((entry < nentries) && (count < n) && !failed)
 UNWINDSET += mem_alloc_vpage.2:3 # while (count < n && !failed)
 UNWINDSET += mem_alloc_vpage.3:4 # for (lvl = 0; lvl < as->pt.dscr->lvls; lvl++)
+UNWINDSET += mem_alloc_vpage.4:3 # while (count < n)
 
-PROOF_SOURCES += $(PROOFDIR)/$(HARNESS_FILE).c $(PROOF_SOURCE)/pt_helpers.c $(PROOF_SOURCE)/as_helpers.c
-PROJECT_SOURCES += $(SRCDIR)/bao-hypervisor/src/arch/riscv/page_table.c $(SRCDIR)/bao-hypervisor/src/core/mem.c $(SRCDIR)/bao-hypervisor/src/core/cache.c $(SRCDIR)/bao-hypervisor/src/core/mmu/mem.c
+PROOF_SOURCES += $(PROOFDIR)/$(HARNESS_FILE).c $(PROOF_SOURCE)/pt_helpers.c $(PROOF_SOURCE)/as_helpers.c $(PROOF_STUB)/src/arch/riscv/page_table.c
+PROJECT_SOURCES += $(SRCDIR)/bao-hypervisor/src/core/mmu/mem.c
 
 # If this proof is found to consume huge amounts of RAM, you can set the
 # EXPENSIVE variable. With new enough versions of the proof tools, this will
