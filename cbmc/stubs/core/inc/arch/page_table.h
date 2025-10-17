@@ -96,6 +96,11 @@ static inline paddr_t pte_addr(pte_t* pte)
     return (*pte);  // stubbed
 }
 
+static inline paddr_t pte_flags(pte_t* pte)
+{
+    return (*pte);  // stubbed
+}
+
 static inline bool pte_valid(pte_t* pte)
 {
     return (*pte != NULL);  // stubbed

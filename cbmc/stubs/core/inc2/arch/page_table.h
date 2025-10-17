@@ -101,6 +101,11 @@ static inline paddr_t pte_addr(pte_t* pte)
     return pte->addr;
 }
 
+static inline paddr_t pte_flags(pte_t* pte)
+{
+    return pte->bits;
+}
+
 static inline bool pte_valid(pte_t* pte)
 {
     return (pte->bits & PTE_VALID);
