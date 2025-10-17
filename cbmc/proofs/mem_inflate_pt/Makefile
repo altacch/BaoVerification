@@ -11,7 +11,7 @@ INCLUDES += -I$(SRCDIR)/bao-hypervisor/src/lib/inc/ -I$(SRCDIR)/bao-hypervisor/s
 INCLUDES += -I $(PROOF_INCLUDE)
 
 REMOVE_FUNCTION_BODY += mem_expand_pte
-UNWINDSET += mem_inflate_pt.0:5 mem_inflate_pt.1:3
+UNWINDSET += proof_pt_init.0:5 proof_pt_is_valid.0:5 mem_inflate_pt.0:5 mem_inflate_pt.1:3
 
 PROOF_SOURCES += $(PROOFDIR)/$(HARNESS_FILE).c $(PROOF_SOURCE)/pt_helpers.c $(PROOF_SOURCE)/as_helpers.c
 PROJECT_SOURCES += $(SRCDIR)/bao-hypervisor/src/arch/riscv/page_table.c $(SRCDIR)/bao-hypervisor/src/core/mem.c $(PROOF_SOURCE)/core_mmu_mem.c

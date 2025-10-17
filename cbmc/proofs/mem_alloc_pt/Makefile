@@ -11,7 +11,7 @@ INCLUDES += -I$(SRCDIR)/bao-hypervisor/src/lib/inc/ -I$(SRCDIR)/bao-hypervisor/s
 INCLUDES += -I $(PROOF_INCLUDE)
 
 REMOVE_FUNCTION_BODY += spin_lock spin_unlock fence_sync_write mem_alloc_ppages pt_get
-UNWINDSET += proof_hier_pt_init.0:5 proof_hier_pt_init.1:5 proof_hier_pt_is_valid.0:5 proof_hier_pt_is_valid.1:5
+UNWINDSET += proof_pt_init.0:5 proof_pt_is_valid.0:5 proof_pt_fill.0:5 proof_pt_fill.1:5 proof_pt_fill.2:5
 UNWINDSET += mem_alloc_pt.0:5
 
 PROOF_SOURCES += $(PROOFDIR)/$(HARNESS_FILE).c $(PROOF_SOURCE)/pt_helpers.c $(PROOF_SOURCE)/as_helpers.c

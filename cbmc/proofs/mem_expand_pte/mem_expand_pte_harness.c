@@ -62,8 +62,9 @@ void harness(void)
 {
     struct addr_space* as;
     as = proof_as_allocate();
-    proof_hier_as_init(as);
-    assert(proof_hier_as_is_valid(as));
+    proof_as_init(as);
+    proof_pt_fill(&as->pt, 4);
+    assert(proof_as_is_valid(as));
 
     /*bool ok;
       alloc_successful = ok;*/
@@ -74,5 +75,5 @@ void harness(void)
     __CPROVER_assume(lvl < 3);
 
     mem_expand_pte(as, addr, lvl);
-    assert(proof_hier_as_is_valid(as));
+    assert(proof_as_is_valid(as));
 }

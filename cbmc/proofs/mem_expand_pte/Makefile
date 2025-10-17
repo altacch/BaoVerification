@@ -11,7 +11,7 @@ INCLUDES += -I$(SRCDIR)/bao-hypervisor/src/lib/inc/ -I$(SRCDIR)/bao-hypervisor/s
 INCLUDES += -I $(PROOF_INCLUDE)
 
 REMOVE_FUNCTION_BODY += fence_sync_write tlb_inv_va mem_alloc_pt
-UNWINDSET += proof_hier_pt_init.0:5 proof_hier_pt_init.1:5 proof_hier_pt_is_valid.0:5 proof_hier_pt_is_valid.1:5
+UNWINDSET += proof_pt_init.0:5 proof_pt_is_valid.0:5 proof_pt_fill.0:5 proof_pt_fill.1:5 proof_pt_fill.2:5
 UNWINDSET += pt_get_pte.0:5 mem_expand_pte.0:5
 
 PROOF_SOURCES += $(PROOFDIR)/$(HARNESS_FILE).c $(PROOF_SOURCE)/pt_helpers.c $(PROOF_SOURCE)/as_helpers.c
@@ -21,7 +21,7 @@ PROJECT_SOURCES += $(SRCDIR)/bao-hypervisor/src/arch/riscv/page_table.c $(SRCDIR
 # EXPENSIVE variable. With new enough versions of the proof tools, this will
 # restrict the number of EXPENSIVE CBMC jobs running at once. See the
 # documentation in Makefile.common under the "Job Pools" heading for details.
-# EXPENSIVE = true
+EXPENSIVE = true
 
 # If you require access to a file-local ("static") function or object to conduct
 # your proof, set the following (and do not include the original source file

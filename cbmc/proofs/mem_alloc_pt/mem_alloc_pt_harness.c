@@ -55,8 +55,9 @@ void harness(void)
 {
     struct addr_space *as;
     as = proof_as_allocate();
-    proof_hier_as_init(as);
-    assert(proof_hier_as_is_valid(as));
+    proof_as_init(as);
+    proof_pt_fill(&as->pt, 4);
+    assert(proof_as_is_valid(as));
 
     /* This needs to be done here since cbmc does not handle well
        non-determinism for global variables */

@@ -5,11 +5,12 @@ HARNESS_FILE = mem_find_sec_harness
 # Litani dashboard. It can be human-readable and contain spaces if you wish.
 PROOF_UID = mem_find_sec
 
-DEFINES += -DIRQC=PLIC -DROOT_SIZE=512 -DRV_XLEN=64
+DEFINES += -DIRQC=PLIC -DROOT_SIZE=4 -DRV_XLEN=64
 INCLUDES += -I$(SRCDIR)/bao-hypervisor/src/lib/inc/ -I$(SRCDIR)/bao-hypervisor/src/core/inc/ -I$(SRCDIR)/bao-hypervisor/src/core/mmu/inc/ -I$(SRCDIR)/bao-hypervisor/src/arch/riscv/inc/ -I$(SRCDIR)/bao-hypervisor/src/platform/drivers/sbi_uart/inc -I$(SRCDIR)/bao-hypervisor/src/platform/qemu-riscv64-virt/inc/ -I$(SRCDIR)/bao-hypervisor/src/arch/riscv/irqc/plic/inc/
 INCLUDES += -I $(PROOF_INCLUDE)
 
 REMOVE_FUNCTION_BODY +=
+UNWINDSET += proof_pt_init.0:5 proof_pt_is_valid.0:5
 UNWINDSET += mem_find_sec.0:5  # sizeof(hyp_secs) / sizeof(struct section) = 4
 
 PROOF_SOURCES += $(PROOFDIR)/$(HARNESS_FILE).c $(PROOF_SOURCE)/pt_helpers.c $(PROOF_SOURCE)/as_helpers.c
