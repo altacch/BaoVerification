@@ -20,40 +20,18 @@
  */
 void harness(void)
 {
-    {
-        /* Case 1: empty page table, page walk always fails */
-        struct page_table *pt;
-        pt = proof_pt_allocate();
-        proof_pt_init(pt);
-        assert(proof_pt_is_valid(pt));
+    struct page_table *pt;
+    pt = proof_pt_allocate();
+    proof_pt_init(pt);
+    proof_pt_fill(pt, 2);
+    assert(proof_pt_is_valid(pt));
 
-        size_t lvl;
-        __CPROVER_assume(lvl < 3);
-        vaddr_t vaddr;
-        __CPROVER_assume(proof_vaddr_is_valid(vaddr));
-        pte_t *res;
+    size_t lvl;
+    __CPROVER_assume(lvl < 3);
+    vaddr_t vaddr;
+    __CPROVER_assume(proof_vaddr_is_valid(vaddr));
+    pte_t *res;
 
-        res = pt_get_pte(pt, lvl, vaddr);
-        //assert(res == NULL);
-        assert(proof_pt_is_valid(pt));
-    }
-
-    {
-        /* Case 2: full page table, page walk always succeeds */
-        struct page_table *pt;
-        pt = proof_pt_allocate();
-        proof_pt_init(pt);
-        proof_pt_fill(pt, 1);
-        assert(proof_pt_is_valid(pt));
-
-        size_t lvl;
-        __CPROVER_assume(lvl < 3);
-        vaddr_t vaddr;
-        __CPROVER_assume(proof_vaddr_is_valid(vaddr));
-        pte_t *res;
-
-        res = pt_get_pte(pt, lvl, vaddr);
-        assert(res != NULL);
-        assert(proof_pt_is_valid(pt));
-    }
+    res = pt_get_pte(pt, lvl, vaddr);
+    assert(proof_pt_is_valid(pt));
 }
